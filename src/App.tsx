@@ -1,26 +1,14 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "../node_modules/tailwindcss/dist/tailwind.css";
+import { DatePicker } from "./Datepicker";
 
 const App: React.FC = () => {
+  const [date, setDate] = useState(new Date());
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="max-w-xs mt-12 mx-auto">
+      <DatePicker date={date} onChange={setDate}></DatePicker>
     </div>
   );
-}
+};
 
 export default App;
