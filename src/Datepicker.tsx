@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 // import { LabelWrapperProps, LabelWrapper } from "./Common";
 import {
   Calendar as CalendarIcon,
@@ -54,7 +54,7 @@ export const RawDatePicker: React.FC<{
   onChange: (date: Date) => void;
 }> = props => {
   const [showCalendar, setShowCalendar] = useState(false);
-  let popupNode: HTMLElement;
+  const popupNode = useRef<HTMLElement>();
 
   function emitSelection(date: Date) {
     props.onChange(date);
@@ -70,7 +70,7 @@ export const RawDatePicker: React.FC<{
    */
   useEffect(() => {
     function mouseDownListener(e: MouseEvent) {
-      if (popupNode && !popupNode.contains(e.target as Node)) {
+      if (popupNode.current && !popupNode.current.contains(e.target as Node)) {
         setShowCalendar(false);
       }
     }
@@ -104,7 +104,7 @@ export const RawDatePicker: React.FC<{
           </div>
         )}
       </Reference>
-      <Popper placement="bottom-start" innerRef={node => (popupNode = node)}>
+      <Popper placement="bottom-start" innerRef={node => (popupNode.current = node)}>
         {({ ref, style, placement, arrowProps }) =>
           showCalendar ? (
             <Calendar
@@ -449,7 +449,7 @@ function daysInMonth(month: number, year: number) {
  * @param year
  */
 function isLeapYear(year: number): boolean {
-  return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
 
 /**
