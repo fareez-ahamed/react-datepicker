@@ -99,7 +99,10 @@ export function useDatepickerCtx(
       }
     }
 
-    document.addEventListener("mousedown", mouseDownListener);
+    if (isVisible) {
+      setMonthYear({ month: date.getMonth(), year: date.getFullYear() });
+      document.addEventListener("mousedown", mouseDownListener);
+    }
 
     return () => {
       document.removeEventListener("mousedown", mouseDownListener);
